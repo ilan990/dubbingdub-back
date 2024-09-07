@@ -62,7 +62,16 @@ const authServices = {
     } catch (error) {
       throw new Error("Token invalide");
     }
-  }
+  },
+  getUserInfo: async (userId) => {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new Error("Utilisateur non trouvé");
+    }
+    // Retournez les informations de l'utilisateur sans le mot de passe
+    const { mot_de_passe, ...userInfo } = user;
+    return userInfo;
+  },
 };
 
 module.exports = authServices;

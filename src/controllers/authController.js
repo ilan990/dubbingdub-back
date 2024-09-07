@@ -27,11 +27,21 @@ const authController = {
   
   logout: async (req, res) => {
     try {
-      const result = await authServices.logout(req.user.userId);
+      const result = await authServices.logout();
       res.json(result);
     } catch (error) {
       console.error('Erreur lors de la déconnexion:', error);
       res.status(500).json({ message: "Erreur lors de la déconnexion" });
+    }
+  },
+
+  getUserInfo: async (req, res) => {
+    try {
+      const userInfo = await authServices.getUserInfo(req.user.userId);
+      res.json(userInfo);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des informations de l\'utilisateur:', error);
+      res.status(500).json({ message: error.message });
     }
   }
 };
