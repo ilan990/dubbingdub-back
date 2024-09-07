@@ -13,7 +13,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/films', filmRoutes);
+//app.use('/api/films', filmRoutes);
 
 const PORT = process.env.PORT || 3000;
 
