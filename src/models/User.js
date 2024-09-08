@@ -21,6 +21,14 @@ const User = {
       [userId, companyName]
     );
   },
+  update: async (userId, userData) => {
+    const { nom, prenom, email } = userData;
+    const [result] = await pool.query(
+      'UPDATE utilisateurs SET nom = ?, prenom = ?, email = ? WHERE id = ?',
+      [nom, prenom, email, userId]
+    );
+    return result.affectedRows > 0;
+  },
 
   findById: async (id) => {
     const [rows] = await pool.query('SELECT * FROM utilisateurs WHERE id = ?', [id]);

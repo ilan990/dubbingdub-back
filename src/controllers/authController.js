@@ -34,6 +34,17 @@ const authController = {
       res.status(500).json({ message: "Erreur lors de la déconnexion" });
     }
   },
+  
+  updateProfile: async (req, res) => {
+    try {
+      const userId = req.user.userId; // Obtenu du middleware d'authentification
+      const updatedUser = await authServices.updateUserProfile(userId, req.body);
+      res.json({ message: "Profil mis à jour avec succès", user: updatedUser });
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du profil:', error);
+      res.status(400).json({ message: error.message });
+    }
+  },
 
   getUserInfo: async (req, res) => {
     try {

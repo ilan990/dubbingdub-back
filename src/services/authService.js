@@ -55,6 +55,31 @@ const authServices = {
     return { message: "Déconnexion réussie" };
   },
 
+  updateUserProfile: async (userId, userData) => {
+   const currentUser = await User.findById(userId);
+    if (!currentUser) {
+      throw new Error("Utilisateur non trouvé");
+    }
+
+    // Fusionner les données actuelles avec les nouvelles données
+    const updatedData = {
+      nom: userData.nom || currentUser.nom,
+      prenom: userData.prenom || currentUser.prenom,
+      email: userData.email || currentUser.email
+    };
+
+    // Mettre à jour l'utilisateur avec les données fusionnées
+    const updated = await User.update(userId, updatedData);
+    if (!updated) {
+      throw new Error("Impossible de mettre à jour le profil utilisateur");
+    }
+
+    // Récupérer et retourner les données mises à jour
+    const updatedUser = await User.findById(userId);
+    const { mot_de_passe, ...userInfo } = updatedUser;
+    return userInfo;
+  },
+
   validateToken: (token) => {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
