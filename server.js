@@ -13,7 +13,6 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api', authenticateToken)
 app.use('/api/auth', authRoutes);
 app.use('/api/films', filmRoutes);
 

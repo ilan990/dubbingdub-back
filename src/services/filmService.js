@@ -3,12 +3,11 @@ const Film = require('../models/Film');
 
 const filmServices = {
     addMovie: async (userId, filmData) => {
-      console.log('Film data received in service:', filmData);
       if (!filmData || typeof filmData !== 'object') {
         throw new Error('Données du film invalides ou manquantes');
       }
   
-      const { titre, description, date_sortie, statut } = filmData;
+      const { titre, description, date_sortie, statut, image } = filmData;
       
       // Validation
       if (!titre || titre.trim() === '') {
@@ -27,12 +26,14 @@ const filmServices = {
         description,
         date_sortie,
         id_production: productionId,
-        statut: statut || 'en_vente' 
+        statut: statut || 'en_vente',
+        image: image || null 
       });
       
       return filmId;
     },
   };
+  
 
   module.exports = filmServices;
 

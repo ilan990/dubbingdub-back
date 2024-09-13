@@ -101,3 +101,6 @@ CREATE INDEX idx_film_statut ON films(statut);
 CREATE INDEX idx_utilisateur_role ON utilisateurs(role);
 CREATE INDEX idx_contrat_statut ON contrats(statut);
 CREATE INDEX idx_candidature_statut ON candidatures_da(statut);
+
+-- Ajout d'un champ Image dans la table films 
+ALTER TABLE films ADD COLUMN image VARCHAR(255) DEFAULT NULL;
