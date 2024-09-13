@@ -32,6 +32,16 @@ const filmServices = {
       
       return filmId;
     },
+    getMovies: async (userId) => {
+        const film = await Film.getMovies(userId);
+        
+        if (!film) {
+          throw new Error("Il n'y a pas de films");
+        }
+        
+        const { mot_de_passe, ...filmsInfo } = film;
+        return filmsInfo;
+      },
   };
   
 

@@ -20,6 +20,22 @@ const filmController = {
         res.status(400).json({ message: error.message });
       }
     },
+
+
+
+    getMovie: async (req, res) => {
+        try {
+          const films = await filmServices.getMovies(req.user);
+
+          res.status(201).json({
+            message: "Voici la liste des films : ",
+            films: films
+          });
+        } catch (error) {
+          console.error('Erreur lors de la récupération des informations de l\'utilisateur:', error);
+          res.status(500).json({ message: error.message });
+        }
+      }
 };
 
 module.exports = filmController;
