@@ -33,7 +33,15 @@ const User = {
   findById: async (id) => {
     const [rows] = await pool.query('SELECT * FROM utilisateurs WHERE id = ?', [id]);
     return rows[0];
-  }
+  },
+  
+  getProductionIdByUserId: async (userId) => {
+    const [rows] = await pool.query(
+      'SELECT id FROM maisons_production WHERE id_utilisateur = ?',
+      [userId]
+    );
+    return rows[0] ? rows[0].id : null;
+  },
 
 };
 
