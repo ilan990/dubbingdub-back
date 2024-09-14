@@ -116,3 +116,17 @@ ADD COLUMN langue_originale VARCHAR(50) DEFAULT NULL,
 ADD COLUMN notes_critiques DECIMAL(3,1) DEFAULT NULL,
 ADD COLUMN lien_bande_annonce VARCHAR(255) DEFAULT NULL,
 ADD COLUMN date_limite_doublage DATE DEFAULT NULL;
+
+--Ajout des infos du rôle 
+ALTER TABLE roles
+ADD COLUMN importance VARCHAR(50) DEFAULT NULL,
+ADD COLUMN acteur_original VARCHAR(100)  DEFAULT NULL,
+ADD COLUMN sexe ENUM('Masculin', 'Féminin', 'Autre')  DEFAULT NULL,
+ADD COLUMN age_approximatif INT  DEFAULT NULL,
+ADD COLUMN accent_requis VARCHAR(100)  DEFAULT NULL,
+ADD COLUMN particularites_voix TEXT  DEFAULT NULL,
+ADD COLUMN nombre_scenes INT  DEFAULT NULL,
+ADD COLUMN nombre_mots INT  DEFAULT NULL,
+ADD COLUMN contexte_personnage TEXT  DEFAULT NULL,
+ADD COLUMN notes_doublage TEXT  DEFAULT NULL,
+ADD COLUMN statut_casting ENUM('À attribuer', 'Attribué', 'En cours d''enregistrement', 'Terminé') DEFAULT 'À attribuer';
