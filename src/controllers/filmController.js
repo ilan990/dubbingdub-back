@@ -69,6 +69,29 @@ const filmController = {
           res.status(500).json({ message: "Erreur lors de l'enregistrement du role" });
         }
     },
+
+  getRolesByIdMovie: async (req, res) => {
+      try {
+        const user = req.user;
+        const filmId = req.params.id;
+        
+        const role = await filmServices.getRolesByIdMovie(filmId, user);
+        res.status(201).json({
+          message: "Voici la liste des rôles du films : ",
+          role: role
+        });
+      } catch (error) {
+        console.error('Erreur lors de la réception du rôle:', error);
+        console.log("erreuuuuur" + error)
+        res.status(500).json({ 
+          message: "Erreur lors de la réception du rôle",
+          error: error.message 
+        });
+      }
+  },
+
+
+    
 };
 
 module.exports = filmController;

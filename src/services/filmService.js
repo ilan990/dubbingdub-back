@@ -95,6 +95,35 @@ const filmServices = {
         return role;
       },
 
+    getRolesByIdMovie: async (filmId, user) => {
+        try {
+    
+        
+        const id_production = await Film.getProductionByMovie(filmId);
+    
+        const roles = await Film.getRolesByIdMovie(filmId);
+
+        // Vérification des autorisations
+        if (((user.role === process.env.user_production && id_production === user.userId) || user.role !== process.env.user_production ) && roles ) {
+            return roles;
+        }else if(id_production !== user.userId){
+            throw new Error('Ce film appartient à une autre maison de production !', 204);
+        }
+
+        if (!roles) {   
+            throw new Error('Vous n\'avez pas de rôles associés au film', 204);
+        }
+    
+        return null;
+
+
+    
+        } catch (error) {
+          console.error('Erreur dans le service lors de la récupération des rôles:', error);
+          throw error;
+        }
+    },  
+
 };
 
   module.exports = filmServices;
