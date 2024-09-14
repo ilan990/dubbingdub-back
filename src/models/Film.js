@@ -2,64 +2,25 @@ const pool = require('../config/database');
 require('dotenv').config();
 
 const Film = {
-    create: async (filmData) => {
-        const {
-          titre,
-          description,
-          date_sortie,
-          id_production,
-          statut,
-          image,
-          duree,
-          pays_origine,
-          realisateur,
-          scenaristes,
-          genres,
-          budget,
-          nb_personnages_parlants,
-          langue_originale,
-          notes_critiques,
-          lien_bande_annonce,
-          date_limite_doublage
-        } = filmData;
-    
-        const query = `
-          INSERT INTO films (
-            titre, description, date_sortie, id_production, statut, image,
-            duree, pays_origine, realisateur, scenaristes, genres, budget,
-            nb_personnages_parlants, langue_originale, notes_critiques,
-            lien_bande_annonce, date_limite_doublage
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `;
-    
-        const values = [
-          titre,
-          description,
-          date_sortie,
-          id_production,
-          statut || 'en_vente',
-          image,
-          duree || null,
-          pays_origine || null,
-          realisateur || null,
-          scenaristes || null,
-          genres || null,
-          budget || null,
-          nb_personnages_parlants || null,
-          langue_originale || null,
-          notes_critiques || null,
-          lien_bande_annonce || null,
-          date_limite_doublage || null
-        ];
-    
-        try {
-          const [result] = await pool.query(query, values);
-          return result.insertId;
-        } catch (error) {
-          console.error('Erreur lors de la création du film:', error);
-          throw error;
-        }
-      },
+  create: async (filmData) => {
+    const columns = Object.keys(filmData).join(', ');
+    const placeholders = Object.keys(filmData).map(() => '?').join(', ');
+    const values = Object.values(filmData);
+
+    const query = `
+      INSERT INTO films (${columns})
+      VALUES (${placeholders})
+    `;
+
+    try {
+      const [result] = await pool.query(query, values);
+      return result.insertId;
+    } catch (error) {
+      console.error('Erreur lors de la création du film:', error);
+      throw error;
+    }
+  },
+
 
     getMovies: async (user) => {
         console.log(user);
@@ -91,6 +52,16 @@ const Film = {
           throw error;
         }
     },
+ 
+    getProductionByMovie: async (filmId) => {
+      try {
+        const [rows] = await pool.query('SELECT id_production FROM films WHERE id = ?', [filmId]);
+        return rows[0];
+      } catch (error) {
+        console.error('Erreur dans le modèle lors de la récupération de la maison de production du film:', error);
+        throw error;
+      }
+    }
 };
 
 module.exports = Film;
