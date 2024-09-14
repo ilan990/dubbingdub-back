@@ -69,6 +69,32 @@ const filmServices = {
         }
     },
 
+    addRole: async (filmId,user, roleData) => {
+        if (!roleData || typeof roleData !== 'object') {
+          throw new Error('Données du rôle invalides ou manquantes');
+        }
+      
+         const {...champsRole } = roleData;
+      
+        const productionId = await Film.getProductionByMovie(filmId);
+
+        if (user.role !== process.env.user_production) {
+            throw new Error("Seules les maisons de production peuvent ajouter des rôles dans des films");
+        }
+
+        if (user.userId !== productionId){
+            throw new Error("Vous n'êtes pas la production responsable de ce film");
+        }
+      
+        // Création du rôle
+        const role = await Film.createRole({
+          ...champsRole,
+          id_film: filmId
+        });
+      
+        return role;
+      },
+
 };
 
   module.exports = filmServices;

@@ -13,4 +13,7 @@ router.get('/', authenticateToken, filmController.getMovie);
 // Recupération des infos du film
 router.get('/:id', authenticateToken, filmController.getFilmById);
 
+// Ajout d'un rôle dans un film
+router.post('/:id/role', authenticateToken, filmController.addRole);
+
 module.exports = router;

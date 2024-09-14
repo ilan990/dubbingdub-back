@@ -56,12 +56,31 @@ const Film = {
     getProductionByMovie: async (filmId) => {
       try {
         const [rows] = await pool.query('SELECT id_production FROM films WHERE id = ?', [filmId]);
-        return rows[0];
+        return rows[0].id_production;
       } catch (error) {
         console.error('Erreur dans le modèle lors de la récupération de la maison de production du film:', error);
         throw error;
       }
-    }
+    },
+
+    createRole: async (roleData) => {
+      const columns = Object.keys(roleData).join(', ');
+      const placeholders = Object.keys(roleData).map(() => '?').join(', ');
+      const values = Object.values(roleData);
+  
+      const query = `
+        INSERT INTO roles (${columns})
+        VALUES (${placeholders})
+      `;
+  
+      try {
+        const [result] = await pool.query(query, values);
+        return result.insertId;
+      } catch (error) {
+        console.error('Erreur lors de la création du film:', error);
+        throw error;
+      }
+    },
 };
 
 module.exports = Film;

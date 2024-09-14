@@ -51,6 +51,24 @@ const filmController = {
           res.status(500).json({ message: "Erreur serveur lors de la récupération du film" });
         }
       },
+
+      addRole: async (req, res) => {
+        try {
+          const user = req.user;
+          const filmId = req.params.id;
+          const roleData = {
+            ...req.body
+          };
+          const role = await filmServices.addRole(filmId, user, roleData);
+          res.status(201).json({
+            message: "Rôle enregistré avec succès",
+            role: role
+          });
+        } catch (error) {
+          console.error('Erreur lors de l\'enregistrement:', error);
+          res.status(500).json({ message: "Erreur lors de l'enregistrement du role" });
+        }
+    },
 };
 
 module.exports = filmController;
