@@ -81,6 +81,16 @@ const Film = {
         }
         return [rows][0]
     },
+
+    findById: async (id) => {
+        try {
+          const [rows] = await pool.query('SELECT * FROM films WHERE id = ?', [id]);
+          return rows[0];
+        } catch (error) {
+          console.error('Erreur dans le modèle lors de la récupération du film:', error);
+          throw error;
+        }
+    },
 };
 
 module.exports = Film;

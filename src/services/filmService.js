@@ -1,5 +1,6 @@
 const User = require('../models/User'); 
 const Film = require('../models/Film');
+require('dotenv').config();
 
 const filmServices = {
     addMovie: async (userId, filmData) => {
@@ -71,8 +72,29 @@ const filmServices = {
         const { mot_de_passe, ...filmsInfo } = film;
         return filmsInfo;
       },
-  };
-  
+
+      getFilmById: async (filmId, userId, userRole) => {
+        try {
+          const film = await Film.findById(filmId);
+    
+          if (!film) {
+            return null;
+          }
+    
+          // Vérification des autorisations
+          if (userRole === process.env.user_admin || userRole === process.env.user_DA || (userRole === process.env.user_production && film.id_production === userId) ) {
+            return film;
+          }
+    
+    
+          return null;
+    
+        } catch (error) {
+          console.error('Erreur dans le service lors de la récupération du film:', error);
+          throw error;
+        }
+    },
+};
 
   module.exports = filmServices;
 

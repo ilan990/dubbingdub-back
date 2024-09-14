@@ -5,7 +5,6 @@ require('dotenv').config();
 
 const authRoutes = require('./src/routes/authRoutes');
 const filmRoutes = require('./src/routes/filmRoutes');
-require('dotenv').config();
 
 const app = express();
 
