@@ -2,13 +2,64 @@ const pool = require('../config/database');
 require('dotenv').config();
 
 const Film = {
-    create: async ({ titre, description, date_sortie, id_production, statut, image }) => {
-      const [result] = await pool.query(
-        'INSERT INTO films (titre, description, date_sortie, id_production, statut, image) VALUES (?, ?, ?, ?, ?, ?)',
-        [titre, description, date_sortie, id_production, statut, image]
-      );
-      return result.insertId;
-    },
+    create: async (filmData) => {
+        const {
+          titre,
+          description,
+          date_sortie,
+          id_production,
+          statut,
+          image,
+          duree,
+          pays_origine,
+          realisateur,
+          scenaristes,
+          genres,
+          budget,
+          nb_personnages_parlants,
+          langue_originale,
+          notes_critiques,
+          lien_bande_annonce,
+          date_limite_doublage
+        } = filmData;
+    
+        const query = `
+          INSERT INTO films (
+            titre, description, date_sortie, id_production, statut, image,
+            duree, pays_origine, realisateur, scenaristes, genres, budget,
+            nb_personnages_parlants, langue_originale, notes_critiques,
+            lien_bande_annonce, date_limite_doublage
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+    
+        const values = [
+          titre,
+          description,
+          date_sortie,
+          id_production,
+          statut || 'en_vente',
+          image,
+          duree || null,
+          pays_origine || null,
+          realisateur || null,
+          scenaristes || null,
+          genres || null,
+          budget || null,
+          nb_personnages_parlants || null,
+          langue_originale || null,
+          notes_critiques || null,
+          lien_bande_annonce || null,
+          date_limite_doublage || null
+        ];
+    
+        try {
+          const [result] = await pool.query(query, values);
+          return result.insertId;
+        } catch (error) {
+          console.error('Erreur lors de la création du film:', error);
+          throw error;
+        }
+      },
 
     getMovies: async (user) => {
         console.log(user);

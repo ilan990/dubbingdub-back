@@ -102,5 +102,17 @@ CREATE INDEX idx_utilisateur_role ON utilisateurs(role);
 CREATE INDEX idx_contrat_statut ON contrats(statut);
 CREATE INDEX idx_candidature_statut ON candidatures_da(statut);
 
--- Ajout d'un champ Image dans la table films 
-ALTER TABLE films ADD COLUMN image VARCHAR(255) DEFAULT NULL;
+-- Ajout des infos du film 
+ALTER TABLE films
+ADD COLUMN image VARCHAR(255) DEFAULT NULL,
+ADD COLUMN duree INT DEFAULT NULL,
+ADD COLUMN pays_origine VARCHAR(100) DEFAULT NULL,
+ADD COLUMN realisateur VARCHAR(255) DEFAULT NULL,
+ADD COLUMN scenaristes TEXT DEFAULT NULL,
+ADD COLUMN genres VARCHAR(255) DEFAULT NULL,
+ADD COLUMN budget DECIMAL(15,2) DEFAULT NULL,
+ADD COLUMN nb_personnages_parlants INT DEFAULT NULL,
+ADD COLUMN langue_originale VARCHAR(50) DEFAULT NULL,
+ADD COLUMN notes_critiques DECIMAL(3,1) DEFAULT NULL,
+ADD COLUMN lien_bande_annonce VARCHAR(255) DEFAULT NULL,
+ADD COLUMN date_limite_doublage DATE DEFAULT NULL;
