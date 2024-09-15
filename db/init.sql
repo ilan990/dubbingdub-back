@@ -130,3 +130,6 @@ ADD COLUMN nombre_mots INT  DEFAULT NULL,
 ADD COLUMN contexte_personnage TEXT  DEFAULT NULL,
 ADD COLUMN notes_doublage TEXT  DEFAULT NULL,
 ADD COLUMN statut_casting ENUM('À attribuer', 'Attribué', 'En cours d''enregistrement', 'Terminé') DEFAULT 'À attribuer';
+
+-- Ajout d'un champs supprime pour ne plus afficher les films supprimé
+ALTER TABLE `films` ADD `supprime` INT NOT NULL DEFAULT '0' AFTER `date_limite_doublage`; 

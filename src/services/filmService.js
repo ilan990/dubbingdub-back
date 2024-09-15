@@ -123,6 +123,7 @@ const filmServices = {
           throw error;
         }
     },  
+
   updateMovie : async (user,id_film, movieData) => {
     if (!movieData || typeof movieData !== 'object') {
       throw new Error('Données du rôle invalides ou manquantes');
@@ -141,6 +142,21 @@ const filmServices = {
       id_film : id_film,
       ...champsMovie,
     });
+  
+    return movie; 
+  },
+
+  
+  deleteMovie : async (user,id_film) => {
+  
+    const productionId = await Film.getProductionByMovie(id_film);
+    
+    if (user.userId !== productionId || user.role == process.env.user_admin ){
+        throw new Error("Vous n'êtes pas la production responsable de ce film !");
+    }
+  
+    // Création du rôle
+    const movie = await Film.deleteMovie(id_film);
   
     return movie; 
   }

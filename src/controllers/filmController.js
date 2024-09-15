@@ -94,7 +94,7 @@ const filmController = {
       const user = req.user; // Obtenu du middleware d'authentification
       const filmId = req.params.id;
       const updatedMovie = await filmServices.updateMovie(user, filmId, req.body);
-      res.json({ message: "Profil mis à jour avec succès", movie: updatedMovie });
+      res.json({ message: "Film mis à jour avec succès", movie: updatedMovie });
     } catch (error) {
       console.error('Erreur lors de la mise à jour du film:', error);
       res.status(400).json({ 
@@ -104,6 +104,21 @@ const filmController = {
     }
   },
 
+  
+  deleteMovie: async (req, res) => {
+    try {
+      const user = req.user; // Obtenu du middleware d'authentification
+      const filmId = req.params.id;
+      const updatedMovie = await filmServices.deleteMovie(user, filmId);
+      res.json({ message: "Film supprimé avec succès", movie: updatedMovie });
+    } catch (error) {
+      console.error('Erreur lors de la suppression du film:', error);
+      res.status(400).json({ 
+          message: "Erreur lors de la suppression du film",
+          error: error.message 
+       });
+    }
+  },
     
 };
 

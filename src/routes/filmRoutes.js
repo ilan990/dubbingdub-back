@@ -22,4 +22,7 @@ router.get('/:id/role', authenticateToken, filmController.getRolesByIdMovie);
 // Modification d'un film
 router.put('/:id', authenticateToken, filmController.updateMovie);
 
+//Suppression d'un film
+router.delete('/:id', authenticateToken, filmController.deleteMovie);
+
 module.exports = router;

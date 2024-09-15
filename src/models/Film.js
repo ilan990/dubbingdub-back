@@ -27,13 +27,13 @@ const Film = {
       let rows;
           
       if (user.role == process.env.user_production) {
-        [rows] = await pool.query('SELECT * FROM films WHERE id_production = ?', [user.userId]);
+        [rows] = await pool.query('SELECT * FROM films WHERE supprime = 0 AND id_production = ?', [user.userId]);
       } else if (user.role == process.env.user_DA) {
         [rows] = await pool.query(
           `SELECT f.*, fd.id_da
             FROM films f
             LEFT JOIN film_da fd ON f.id = fd.id_film
-            WHERE fd.id_da = ? OR fd.id_da is NULL
+            WHERE supprime = 0 AND fd.id_da = ? OR fd.id_da is NULL
             ORDER BY f.id`,
           [user.userId]
         );
@@ -104,6 +104,16 @@ const Film = {
     values.push(id_film);
     
     const [result] = await pool.query(query, values);
+    
+    return result.affectedRows > 0;
+  },
+
+  
+  deleteMovie: async (id_film) => {
+  
+    const query = `UPDATE films SET supprime = 1 WHERE id = ?`;
+   
+    const [result] = await pool.query(query, id_film);
     
     return result.affectedRows > 0;
   },
