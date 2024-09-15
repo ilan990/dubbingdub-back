@@ -82,7 +82,6 @@ const filmController = {
         });
       } catch (error) {
         console.error('Erreur lors de la réception du rôle:', error);
-        console.log("erreuuuuur" + error)
         res.status(500).json({ 
           message: "Erreur lors de la réception du rôle",
           error: error.message 
@@ -90,6 +89,20 @@ const filmController = {
       }
   },
 
+  updateMovie: async (req, res) => {
+    try {
+      const user = req.user; // Obtenu du middleware d'authentification
+      const filmId = req.params.id;
+      const updatedMovie = await filmServices.updateMovie(user, filmId, req.body);
+      res.json({ message: "Profil mis à jour avec succès", movie: updatedMovie });
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du film:', error);
+      res.status(400).json({ 
+          message: "Erreur lors de la mise à jour du film",
+          error: error.message 
+       });
+    }
+  },
 
     
 };

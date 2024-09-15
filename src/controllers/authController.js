@@ -20,8 +20,11 @@ const authController = {
       const result = await authServices.login(email, mot_de_passe);
       res.json(result);
     } catch (error) {
-      console.error('Erreur lors de la connexion:', error);
-      res.status(401).json({ message: error.message });
+      console.error('Erreur lors de la connexion:', error.message);
+      res.status(401).json({
+        message: "Erreur lors de la connexion :",
+          error: error.message 
+       });
     }
   },
   

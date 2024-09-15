@@ -92,6 +92,22 @@ const Film = {
     }
   },
 
+  updateMovie: async (filmData) => {
+    const { id_film, ...updateFields } = filmData;
+  
+    const fields = Object.keys(updateFields);
+    const values = Object.values(updateFields);
+    
+    const setClause = fields.map(field => `${field} = ?`).join(', ');
+    const query = `UPDATE films SET ${setClause} WHERE id = ?`;
+    
+    values.push(id_film);
+    
+    const [result] = await pool.query(query, values);
+    
+    return result.affectedRows > 0;
+  },
+
 };
 
 module.exports = Film;

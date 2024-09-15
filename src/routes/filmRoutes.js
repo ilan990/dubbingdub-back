@@ -19,4 +19,7 @@ router.post('/:id/role', authenticateToken, filmController.addRole);
 // Récupération des roles d'un film
 router.get('/:id/role', authenticateToken, filmController.getRolesByIdMovie);
 
+// Modification d'un film
+router.put('/:id', authenticateToken, filmController.updateMovie);
+
 module.exports = router;
