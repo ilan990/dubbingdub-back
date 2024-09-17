@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const authRoutes = require('./src/routes/authRoutes');
 const filmRoutes = require('./src/routes/filmRoutes');
+const candidatureRoutes = require('./src/routes/candidatureRoutes');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/films', filmRoutes);
+app.use('/api/candidature',candidatureRoutes)
 
 const PORT = process.env.PORT || 3000;
 
