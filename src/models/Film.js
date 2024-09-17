@@ -118,6 +118,26 @@ const Film = {
     return result.affectedRows > 0;
   },
 
+  candidatureDA: async(candidatureData) => {
+    
+    const columns = Object.keys(candidatureData).join(', ');
+    const placeholders = Object.keys(candidatureData).map(() => '?').join(', ');
+    const values = Object.values(candidatureData);
+
+    const query = `
+      INSERT INTO candidatures_da (${columns})
+      VALUES (${placeholders})
+    `;
+
+    try {
+      const [result] = await pool.query(query, values);
+      return result.insertId;
+    } catch (error) {
+      console.error('Erreur lors de la création du film:', error);
+      throw error;
+    }
+
+  }
 };
 
 module.exports = Film;

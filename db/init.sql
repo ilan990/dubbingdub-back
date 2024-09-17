@@ -133,3 +133,9 @@ ADD COLUMN statut_casting ENUM('À attribuer', 'Attribué', 'En cours d''enregis
 
 -- Ajout d'un champs supprime pour ne plus afficher les films supprimé
 ALTER TABLE `films` ADD `supprime` INT NOT NULL DEFAULT '0' AFTER `date_limite_doublage`; 
+
+-- Ajout d'infos pour la table candidatures_da
+ALTER TABLE candidatures_da
+ADD COLUMN date_reponse DATETIME,
+ADD COLUMN raison_refus TEXT,
+ADD COLUMN message TEXT;

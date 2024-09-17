@@ -112,13 +112,31 @@ const filmController = {
       const updatedMovie = await filmServices.deleteMovie(user, filmId);
       res.json({ message: "Film supprimé avec succès", movie: updatedMovie });
     } catch (error) {
-      console.error('Erreur lors de la suppression du film:', error);
+      console.error('Erreur lors de la suppression du film : ', error);
       res.status(400).json({ 
-          message: "Erreur lors de la suppression du film",
+          message: "Erreur lors de la suppression du film : ",
           error: error.message 
        });
     }
   },
+
+  candidatureDA: async (req, res) => {
+    try {
+      const user = req.user; // Obtenu du middleware d'authentification
+      const filmId = req.params.id;
+      if (!req.body) {
+        req.body.message = null;
+      }
+      const candidature = await filmServices.candidatureDA(user, filmId, req.body);
+      res.json({ message: "Candidature enregistré", id: candidature });
+    } catch (error) {
+      console.error('Erreur lors de l\'enregistrement de la candidature : ', error);
+      res.status(400).json({ 
+          message: "Erreur lors de l\'enregistrement de la candidature : ",
+          error: error.message 
+       });
+    }
+  }
     
 };
 

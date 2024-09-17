@@ -159,7 +159,28 @@ const filmServices = {
     const movie = await Film.deleteMovie(id_film);
   
     return movie; 
+  },
+
+  candidatureDA : async (user, id_film,candidatureData) =>{
+   
+    if (user.role !== process.env.user_DA ){
+      throw new Error("Vous n'êtes pas un directeur artistique");
+    }
+
+    if (!candidatureData || typeof candidatureData !== 'object') {
+      throw new Error('Données de la candidature invalides ou manquantes');
+    }
+    const {...champsCandidatureDa} = candidatureData;
+    const candidature = await Film.candidatureDA({
+      id_film : id_film,
+      id_da : user.userId,
+      ...champsCandidatureDa,
+    });
+
+    return candidature;
+    
   }
+    
 
 };
 

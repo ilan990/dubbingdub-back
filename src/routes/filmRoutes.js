@@ -25,4 +25,7 @@ router.put('/:id', authenticateToken, filmController.updateMovie);
 //Suppression d'un film
 router.delete('/:id', authenticateToken, filmController.deleteMovie);
 
+//Candidature pour DA
+router.post('/:id/candidature', authenticateToken, filmController.candidatureDA);
+
 module.exports = router;
