@@ -11,7 +11,6 @@ const candidatureServices = {
         }else{
             throw new Error("Vous n'êtes pas une maison de production !");
         }
-        // Retournez les informations des candidatures 
         
       }
 };
