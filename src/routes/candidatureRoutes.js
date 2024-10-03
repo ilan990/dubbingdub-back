@@ -7,4 +7,7 @@ const router = express.Router();
 //Candidature pour DA
 router.get('/', authenticateToken, candidatureController.getCandidatures);
 
+// Modification d'une candidature
+router.put('/:id', authenticateToken, candidatureController.updateCandidature);
+
 module.exports = router;

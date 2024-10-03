@@ -16,6 +16,21 @@ const candidatureController = {
         }
     },
 
+    updateCandidature: async (req, res) => {
+        try {
+          const user = req.user; // Obtenu du middleware d'authentification
+          const candidatureId = req.params.id;
+          const updatedMovie = await candidatureServices.updateCandidature(user, candidatureId, req.body);
+          res.json({ message: "Candidature mis à jour avec succès", movie: updatedMovie });
+        } catch (error) {
+          console.error('Erreur lors de la mise à jour du candidature:', error);
+          res.status(400).json({ 
+              message: "Erreur lors de la mise à jour du candidature",
+              error: error.message 
+           });
+        }
+      },
+
     
 };
 
