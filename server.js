@@ -6,6 +6,7 @@ require('dotenv').config();
 const authRoutes = require('./src/routes/authRoutes');
 const filmRoutes = require('./src/routes/filmRoutes');
 const candidatureRoutes = require('./src/routes/candidatureRoutes');
+const contratRoutes = require('./src/routes/contratRoutes');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/films', filmRoutes);
 app.use('/api/candidature',candidatureRoutes)
+app.use('/api/contrat',contratRoutes)
 
 const PORT = process.env.PORT || 3000;
 
