@@ -30,8 +30,18 @@ const contratServices = {
           console.error('Erreur lors de la création du contrat:', error);
           throw new Error("Erreur lors de l'enregistrement du contrat");
         }
-      },
+    },
     
+    getContrats: async (userId) => {
+        const contrat = await Contrat.getContrats(userId);
+        
+        if (!contrat) {
+          throw new Error("Il n'y a pas de contrats");
+        }
+        
+        const { ...contratsInfo } = contrat;
+        return contratsInfo;
+    },
 
 };
 

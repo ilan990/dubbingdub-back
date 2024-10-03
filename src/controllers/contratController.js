@@ -18,6 +18,20 @@ const contratController = {
         }
     },
 
+    getContrat: async (req, res) => {
+        try {
+          const contrats = await contratServices.getContrats(req.user);
+
+          res.status(201).json({
+            message: "Voici la liste des contrats : ",
+            contrats: contrats
+          });
+        } catch (error) {
+          console.error('Erreur lors de la récupération des informations de l\'utilisateur:', error);
+          res.status(500).json({ message: error.message });
+        }
+    },
+
     
 };
 

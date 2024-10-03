@@ -19,7 +19,18 @@ const Contrat = {
       console.error('Erreur lors de la création du contrat:', error);
       throw error;
     }
-  }
+  },
+
+  getContrats: async (user) => {
+    let rows;
+        
+    if (user.role == process.env.user_DA) {
+      [rows] = await pool.query('SELECT c.* FROM contrats c INNER JOIN film_da fd ON fd.id_film = c.id_film WHERE id_da = ?', [user.userId]);
+    } else {
+      throw new Error('Rôle utilisateur non reconnu');
+    }
+    return [rows][0]
+},
 };
 
 module.exports = Contrat;

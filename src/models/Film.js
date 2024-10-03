@@ -23,7 +23,6 @@ const Film = {
 
 
   getMovies: async (user) => {
-      console.log(user);
       let rows;
           
       if (user.role == process.env.user_production) {

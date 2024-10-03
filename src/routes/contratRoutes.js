@@ -7,5 +7,7 @@ const router = express.Router();
 //Ajout d'un contrat doubleur
 router.post('/', authenticateToken, contratController.addContrat);
 
+//Ajout d'un contrat doubleur
+router.get('/', authenticateToken, contratController.getContrat);
 
 module.exports = router;
