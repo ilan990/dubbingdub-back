@@ -20,11 +20,13 @@
 ## Phase 3 : Candidatures et contrats
 10. POST /api/films/{id}/candidatures - Candidature d'un DA pour un film
 11. GET /api/candidatures - Récupération des candidatures (pour les maisons de production)
-
 12. PUT /api/candidatures/{id} - Mise à jour du statut d'une candidature
 13. POST /api/contrats - Création d'un contrat (pour les DA)
 14. GET /api/contrats - Récupération des contrats (pour les doubleurs et les DA)
 
+
+
+// Etape après la mise en place de la partie front
 ## Phase 4 : Gestion des disponibilités et communication
 15. POST /api/disponibilites - Ajout de disponibilités (pour les doubleurs)
 16. GET /api/disponibilites - Récupération des disponibilités (pour les DA)
