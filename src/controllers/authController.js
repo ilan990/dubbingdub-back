@@ -1,6 +1,26 @@
+// src/controllers/authcontroller.js
 const authServices = require('../services/authService');
 
 const authController = {
+  verifyToken: async (req, res) => {
+    try {
+      const token = req.headers.authorization;
+      if (!token) {
+        return res.status(401).json({ valid: false, message: "Aucun token fourni" });
+      }
+      
+      const result = await authServices.verifyToken(token);
+      
+      if (result.valid) {
+        res.json({ valid: true, user: result.user });
+      } else {
+        res.status(401).json({ valid: false, message: result.error });
+      }
+    } catch (error) {
+      console.error('Erreur lors de la vérification du token:', error);
+      res.status(500).json({ valid: false, message: "Erreur interne du serveur" });
+    }
+  },
   register: async (req, res) => {
     try {
       const userId = await authServices.register(req.body);
@@ -22,9 +42,9 @@ const authController = {
     } catch (error) {
       console.error('Erreur lors de la connexion:', error.message);
       res.status(401).json({
-        message: "Erreur lors de la connexion :",
-          error: error.message 
-       });
+        message: "Mauvais identifiant ou mot de passe",
+        error: error.message
+      });
     }
   },
   

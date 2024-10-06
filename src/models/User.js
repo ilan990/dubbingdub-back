@@ -1,4 +1,5 @@
-const pool = require('../config/database');
+// src/models/User.js
+ pool = require('../config/database');
 
 const User = {
   findByEmail: async (email) => {

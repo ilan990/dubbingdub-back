@@ -1,9 +1,37 @@
+// src/services/authServices.js
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 require('dotenv').config();
 
 const authServices = {
+  verifyToken: async (token) => {
+    try {
+      // Supprimer le préfixe 'Bearer ' si présent
+      const actualToken = token.startsWith('Bearer ') ? token.slice(7) : token;
+
+      const decoded = jwt.verify(actualToken, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.userId);
+      
+      if (!user) {
+        return { valid: false, error: "Utilisateur non trouvé" };
+      }
+
+      const { mot_de_passe, ...userInfo } = user;
+      return { 
+        valid: true, 
+        user: { 
+          ...userInfo, 
+          userId: user.id,  // Assurez-vous que l'ID est inclus
+          role: user.role   // Assurez-vous que le rôle est inclus
+        } 
+      };
+    } catch (error) {
+      console.error('Erreur de vérification du token:', error);
+      return { valid: false, error: error.message };
+    }
+  },
+
   register: async (userData) => {
     const { nom, prenom, email, mot_de_passe, role } = userData;
 
@@ -28,26 +56,23 @@ const authServices = {
     return userId;
   },
 
-  login: async (email, password) => {
+  login: async (email, mot_de_passe) => {
     // Trouver l'utilisateur par email
     const user = await User.findByEmail(email);
     if (!user) {
       throw new Error("Email ou mot de passe incorrect");
     }
-
     // Vérifier le mot de passe
-    const isPasswordValid = await bcrypt.compare(password, user.mot_de_passe);
+    const isPasswordValid = await bcrypt.compare(mot_de_passe, user.mot_de_passe);
     if (!isPasswordValid) {
       throw new Error("Email ou mot de passe incorrect");
     }
-
     // Générer un token JWT
     const token = jwt.sign(
       { userId: user.id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
-
     return { userId: user.id, role: user.role, token };
   },
 
